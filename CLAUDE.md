@@ -9,6 +9,8 @@ Live at https://rajranjityadav.netlify.app, hosted on Netlify. Source: github.co
 - `assets/raj_ranjit_yadav_resume.pdf` (lowercase): the resume every "Resume" link opens. To update the resume, replace this file and keep the same file name. Master copy: `~/Documents/Resumes/universal/Raj_Ranjit_Yadav_Resume.pdf`.
 - `assets/projects/`: real result screenshots shown in the featured build cards (`.shot` frames). Only use genuine output, with no personal data, company names from applications, or machine names.
 - There is no `og-image.png` yet, and no `og:image` tag.
+- `netlify.toml`: deploy settings (publish `.`, no build) and 404s for repo-only files (`CLAUDE.md`, `README.md`, `netlify.toml`). Add any new repo-only file there too.
+- `README.md`: repo readme with the Netlify deploy-status badge.
 
 ## Page sections (in order, by id)
 `#top` hero (headline, counting stats, interactive terminal, "Current quest" card) →

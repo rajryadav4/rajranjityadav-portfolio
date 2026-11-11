@@ -1,0 +1,23 @@
+# Static site with no build step. These settings override the ones in the Netlify UI.
+[build]
+  publish = "."
+  command = "echo 'Static site: no build step'"
+
+# Repo-only files are not part of the site.
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/404"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/netlify.toml"
+  to = "/404"
+  status = 404
+  force = true
