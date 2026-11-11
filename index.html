@@ -33,7 +33,7 @@
     --accent: #3b5bfd;
     --accent2: #8b5cf6;
     --chip: #eef1ff;
-    --shot-bg: #ffffff;
+    --shot-bg: #ffffff; --video-bg: #000000;
     --shadow: 0 1px 2px rgba(15, 23, 42, .04), 0 12px 32px -12px rgba(15, 23, 42, .12);
     --grad: linear-gradient(120deg, var(--accent), var(--accent2));
     --sans: "Plus Jakarta Sans", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
@@ -47,14 +47,14 @@
     :root:not([data-theme="light"]) {
       --bg: #0a0f1e; --card: #121a2e; --ink: #e9edf7; --soft: #9aa5bc; --line: #222b45;
       --accent: #7d93ff; --accent2: #b39bff; --chip: #1b2442;
-      --shot-bg: #ffffff;
+      --shot-bg: #ffffff; --video-bg: #000000;
       --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -16px rgba(0,0,0,.6);
     }
   }
   :root[data-theme="dark"] {
     --bg: #0a0f1e; --card: #121a2e; --ink: #e9edf7; --soft: #9aa5bc; --line: #222b45;
     --accent: #7d93ff; --accent2: #b39bff; --chip: #1b2442;
-    --shot-bg: #ffffff;
+    --shot-bg: #ffffff; --video-bg: #000000;
     --shadow: 0 1px 2px rgba(0,0,0,.3), 0 16px 40px -16px rgba(0,0,0,.6);
   }
   *, *::before, *::after { box-sizing: inherit; }
@@ -231,7 +231,7 @@
   .tags { display: flex; flex-wrap: wrap; gap: .4rem; list-style: none; padding: 0; margin: 0 0 1.4rem; }
   .tags li { font-size: .78rem; font-weight: 600; padding: .28rem .65rem; border-radius: 999px; background: var(--chip); color: var(--ink); }
   .links { display: flex; flex-wrap: wrap; gap: .6rem; }
-  .links a { font-size: .88rem; padding: .55rem 1rem; }
+  .links .btn { font-size: .88rem; padding: .55rem 1rem; }
   @media (max-width: 900px) { .build { grid-template-columns: 1fr; } .build.flip .build-visual { order: 0; } .build-visual { min-height: 16rem; } }
 
   /* Verified result screenshots */
@@ -239,13 +239,30 @@
   .shot-bar { display: flex; align-items: center; gap: .35rem; padding: .55rem .85rem; border-bottom: 1px solid var(--line); font-size: .72rem; font-weight: 700; color: var(--soft); min-width: 0; }
   .shot-bar i { flex: none; width: .55rem; height: .55rem; border-radius: 50%; background: var(--line); }
   .shot-bar span { margin-left: .4rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .shot a { display: block; background: var(--shot-bg); }
+  .shot a.shot-img { display: block; background: var(--shot-bg); }
   .shot img { width: 100%; height: auto; transition: transform .4s ease; }
-  .shot a:hover img { transform: scale(1.02); }
-  .shot figcaption { display: block; padding: .7rem .85rem; font-size: .78rem; line-height: 1.45; color: var(--soft); border-top: 1px solid var(--line); }
-  .shot figcaption b { color: var(--ink); }
-  .shot figcaption .badge { display: inline-block; margin-right: .45rem; }
-  @media (prefers-reduced-motion: reduce) { .shot img { transition: none; } .shot a:hover img { transform: none; } }
+  .shot a.shot-img:hover img { transform: scale(1.02); }
+  .shot figcaption, .shot .shot-cap { display: block; margin: 0; padding: .7rem .85rem; font-size: .78rem; line-height: 1.45; color: var(--soft); border-top: 1px solid var(--line); }
+  .shot figcaption b, .shot .shot-cap b { color: var(--ink); }
+  .shot figcaption .badge, .shot .shot-cap .badge { display: inline-block; margin-right: .45rem; }
+  .shot-cap a { color: var(--accent); font-weight: 700; text-decoration: none; white-space: nowrap; }
+  .shot-cap a:hover { text-decoration: underline; }
+  .shot-tabs { display: flex; gap: .2rem; margin-left: .45rem; min-width: 0; }
+  .shot-tabs button { font: inherit; font-size: .74rem; font-weight: 700; padding: .28rem .7rem; border: 0; border-radius: 999px; background: transparent; color: var(--soft); cursor: pointer; white-space: nowrap; }
+  .shot-tabs button:hover { color: var(--ink); }
+  .shot-tabs button[aria-selected="true"] { background: var(--chip); color: var(--ink); }
+  html:not(.js) .shot-tabs { display: none; }
+  .yt { position: relative; aspect-ratio: 16 / 9; background: var(--video-bg); }
+  .yt iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+  .yt-play { position: absolute; inset: 0; width: 100%; padding: 0; border: 0; background: var(--video-bg); cursor: pointer; display: block; color: #fff; font: inherit; }
+  .yt-play img { width: 100%; height: 100%; object-fit: cover; opacity: .9; }
+  .yt-btn { position: absolute; left: 50%; top: 50%; width: 4.2rem; height: 4.2rem; margin: -2.1rem 0 0 -2.1rem; border-radius: 50%; background: var(--grad); display: grid; place-items: center; box-shadow: 0 12px 30px -8px rgba(0,0,0,.6); transition: transform .2s ease; }
+  .yt-btn svg { width: 1.5rem; height: 1.5rem; margin-left: .2rem; fill: #fff; }
+  .yt-play:hover .yt-btn, .yt-play:focus-visible .yt-btn { transform: scale(1.08); }
+  .demo-login { margin: 1rem 0 0; font-size: .84rem; color: var(--soft); display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .5rem; }
+  .demo-login code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: .82rem; background: var(--chip); color: var(--ink); padding: .12rem .45rem; border-radius: 6px; }
+  .copy-btn { font: inherit; font-size: .76rem; font-weight: 700; padding: .2rem .65rem; border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--accent); cursor: pointer; }
+  @media (prefers-reduced-motion: reduce) { .shot img, .yt-btn { transition: none; } .shot a.shot-img:hover img, .yt-play:hover .yt-btn, .yt-play:focus-visible .yt-btn { transform: none; } }
 
   .more-builds { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
   .small-build { padding: 1.75rem; display: flex; flex-direction: column; }
@@ -527,13 +544,30 @@
 
       <article class="card build reveal">
         <div class="build-visual">
-          <figure class="shot">
-            <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>Pre-Mortem playground · step 1 of 5</span></div>
-            <a href="assets/projects/premortem-playground.jpg" target="_blank" rel="noopener" aria-label="Open the full Pre-Mortem playground screenshot">
-              <img src="assets/projects/premortem-playground.jpg" width="1600" height="1017" loading="lazy" decoding="async"
-                alt="Pre-Mortem playground, step 1 of 5. An AI agent pushes the software upgrade behind the 2022 Rogers outage to four routers at once. The checkpoint passes registry and guardrail, fails twin, risk, and policy, and returns Denied: core route load would go from 47% to 207%, 1.2 million customers would be affected, and outage risk is 61% against a 20% limit. The network map reads: Blocked, the network never saw this change.">
-            </a>
-            <figcaption><span class="badge">Real output</span> The team’s playground replaying the Rogers 2022 change: <b>denied</b> before it reached the network (load 47% → 207%, <b>1.2M</b> customers spared).</figcaption>
+          <figure class="shot" id="pmShot">
+            <div class="shot-bar">
+              <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+              <div class="shot-tabs" role="tablist" aria-label="Pre-Mortem result and demo video">
+                <button type="button" role="tab" id="pmTabResult" aria-controls="pmPanelResult" aria-selected="true">Live result</button>
+                <button type="button" role="tab" id="pmTabVideo" aria-controls="pmPanelVideo" aria-selected="false" tabindex="-1">▶ Demo video</button>
+              </div>
+            </div>
+            <div class="shot-panel" role="tabpanel" id="pmPanelResult" aria-labelledby="pmTabResult">
+              <a class="shot-img" href="assets/projects/premortem-playground.jpg" target="_blank" rel="noopener" aria-label="Open the full Pre-Mortem playground screenshot">
+                <img src="assets/projects/premortem-playground.jpg" width="1600" height="1017" loading="lazy" decoding="async"
+                  alt="Pre-Mortem playground, step 1 of 5. An AI agent pushes the software upgrade behind the 2022 Rogers outage to four routers at once. The checkpoint passes registry and guardrail, fails twin, risk, and policy, and returns Denied: core route load would go from 47% to 207%, 1.2 million customers would be affected, and outage risk is 61% against a 20% limit. The network map reads: Blocked, the network never saw this change.">
+              </a>
+              <p class="shot-cap"><span class="badge">Real output</span> The team’s playground replaying the Rogers 2022 change: <b>denied</b> before it reached the network (load 47% → 207%, <b>1.2M</b> customers spared).</p>
+            </div>
+            <div class="shot-panel" role="tabpanel" id="pmPanelVideo" aria-labelledby="pmTabVideo" hidden>
+              <div class="yt" id="pmVideo" data-yt="hvyUwNxniSE">
+                <button type="button" class="yt-play" aria-label="Play the Pre-Mortem project demo video">
+                  <img src="https://i.ytimg.com/vi/hvyUwNxniSE/maxresdefault.jpg" width="1280" height="720" alt="" loading="lazy" decoding="async">
+                  <span class="yt-btn" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z"/></svg></span>
+                </button>
+              </div>
+              <p class="shot-cap"><span class="badge">Demo</span> Our project demo for the hackathon, recorded by the team. <a href="https://youtu.be/hvyUwNxniSE" target="_blank" rel="noopener">Open on YouTube ↗</a></p>
+            </div>
           </figure>
         </div>
         <div class="build-body">
@@ -546,7 +580,12 @@
             <div><strong>~60</strong><span>attack and benign scenarios, frozen and hashed</span></div>
           </div>
           <ul class="tags" aria-label="Built with"><li>Python</li><li>AWS Lambda</li><li>Bedrock AgentCore</li><li>Strands</li><li>Bedrock Guardrails</li><li>Cedar</li><li>IAM</li></ul>
-          <div class="links"><a class="btn btn-primary" href="https://github.com/rajryadav4/preMORTEM" target="_blank" rel="noopener">View code ↗</a></div>
+          <div class="links">
+            <a class="btn btn-primary" href="https://premortem-one.vercel.app/#/" target="_blank" rel="noopener">Try the live demo ↗</a>
+            <a class="btn btn-ghost" id="pmWatch" href="https://youtu.be/hvyUwNxniSE" target="_blank" rel="noopener">▶ Watch the demo</a>
+            <a class="btn btn-ghost" href="https://github.com/rajryadav4/preMORTEM" target="_blank" rel="noopener">View code ↗</a>
+          </div>
+          <p class="demo-login">Demo sign-in: <span>email <code>noc@demo</code></span> <span>password <code>premortem</code></span> <button type="button" class="copy-btn" data-copy="premortem" aria-label="Copy the demo password">Copy password</button></p>
         </div>
       </article>
 
@@ -554,7 +593,7 @@
         <div class="build-visual">
           <figure class="shot">
             <div class="shot-bar" aria-hidden="true"><i></i><i></i><i></i><span>localhost:8787 · Job Hunter dashboard</span></div>
-            <a href="assets/projects/job-hunter-run.jpg" target="_blank" rel="noopener" aria-label="Open the full Job Hunter dashboard screenshot">
+            <a class="shot-img" href="assets/projects/job-hunter-run.jpg" target="_blank" rel="noopener" aria-label="Open the full Job Hunter dashboard screenshot">
               <img src="assets/projects/job-hunter-run.jpg" width="1600" height="544" loading="lazy" decoding="async"
                 alt="Job Hunter dashboard after a finished run. Four pipeline stages: Find jobs, Tailor resumes, Apply, and Report. The run scanned 9,476 postings, found 383 eligible, picked 338, and marked 212 not eligible.">
             </a>
@@ -923,6 +962,64 @@
       await run('python automate.py');
       line('psst, try the buttons below 👇', 'warn');
     })();
+  })();
+</script>
+<script>
+  /* Pre-Mortem: result / demo-video tabs, click-to-play video, copy password */
+  (function () {
+    var fig = document.getElementById('pmShot');
+    if (!fig) return;
+    var tabs = [document.getElementById('pmTabResult'), document.getElementById('pmTabVideo')];
+    var panels = [document.getElementById('pmPanelResult'), document.getElementById('pmPanelVideo')];
+    var box = document.getElementById('pmVideo');
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function pause() {
+      var f = box.querySelector('iframe');
+      if (f && f.contentWindow) f.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+    }
+    function select(i, focus) {
+      tabs.forEach(function (t, j) {
+        t.setAttribute('aria-selected', j === i ? 'true' : 'false');
+        t.tabIndex = j === i ? 0 : -1;
+        panels[j].hidden = j !== i;
+      });
+      if (i !== 1) pause();
+      if (focus) tabs[i].focus();
+    }
+    function play() {
+      select(1);
+      if (box.querySelector('iframe')) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + box.getAttribute('data-yt') + '?autoplay=1&rel=0&playsinline=1&enablejsapi=1';
+      f.title = 'Pre-Mortem project demo video';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.referrerPolicy = 'strict-origin-when-cross-origin';
+      f.allowFullscreen = true;
+      box.replaceChildren(f);
+      f.focus();
+    }
+    tabs.forEach(function (t, i) {
+      t.addEventListener('click', function () { select(i); });
+      t.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') { e.preventDefault(); select(1 - i, true); }
+      });
+    });
+    box.querySelector('.yt-play').addEventListener('click', play);
+    var watch = document.getElementById('pmWatch');
+    if (watch) watch.addEventListener('click', function (e) {
+      e.preventDefault();
+      play();
+      var r = fig.getBoundingClientRect();
+      if (r.top < 0 || r.bottom > window.innerHeight) fig.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    });
+    document.querySelectorAll('.copy-btn[data-copy]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var label = b.textContent;
+        function done(ok) { b.textContent = ok ? 'Copied ✓' : 'Press ⌘C'; setTimeout(function () { b.textContent = label; }, 1600); }
+        try { navigator.clipboard.writeText(b.getAttribute('data-copy')).then(function () { done(true); }, function () { done(false); }); }
+        catch (err) { done(false); }
+      });
+    });
   })();
 </script>
 </body>
